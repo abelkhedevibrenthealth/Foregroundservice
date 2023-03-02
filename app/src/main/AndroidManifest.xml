@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <uses-permission android:name="android.permission.health.READ_EXERCISE"/>
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>`
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.ForegroundService"
+        tools:targetApi="31">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.ForegroundService.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!--
+               The app needs to handle this intent and display an appropriate privacy policy
+               explaining how the user's data will be used and handled.
+
+               This intent is sent to the app when the user clicks on the "privacy policy" link
+               in the Health Connect permissions dialog.
+           -->
+            <intent-filter>
+                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+            </intent-filter>
+
+        </activity>
+        <service android:name=".SampleForegroundService">
+
+        </service>
+    </application>
+
+    <queries>
+        <package android:name="com.google.android.apps.healthdata" />
+
+        <!--
+             This is required such that the app can query and resolve packages that have written
+             Health Connect data, and obtain their friendly App Name and Icon to show for data
+             attribution in the app
+        -->
+        <intent>
+            <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+        </intent>
+    </queries>
+
+</manifest>
